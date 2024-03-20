@@ -27,7 +27,8 @@ p.update(params)
 
 
 p['data_path'] = os.path.join(p['data_path'], data_folder_hash)
-os.mkdir(p['data_path'])
+if not os.path.exists(p['data_path']):
+    os.mkdir(p['data_path'])
 
 ### safe parameters to file
 
