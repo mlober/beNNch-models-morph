@@ -27,8 +27,10 @@ p.update(params)
 
 
 p['data_path'] = os.path.join(p['data_path'], data_folder_hash)
-if not os.path.exists(p['data_path']):
+try:
     os.mkdir(p['data_path'])
+except:
+    pass
 
 ### safe parameters to file
 
@@ -39,8 +41,10 @@ with open(parameter_file, 'w') as f:
 # Create folder for storing simulation output
 output_path = os.path.join(p['data_path'],
                         'recordings')
-if not os.path.exists(output_path):
+try:
     os.mkdir(output_path)
+except:
+    pass
 
 ### build and simulate model
 
