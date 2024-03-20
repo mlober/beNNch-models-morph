@@ -35,13 +35,13 @@ if not os.path.exists(p['data_path']):
 parameter_file = os.path.join(p['data_path'], 'parameter_dict.json')
 with open(parameter_file, 'w') as f:
     json.dump(p, f)
-'''
+
 # Create folder for storing simulation output
 output_path = os.path.join(p['data_path'],
                         'recordings')
 if not os.path.exists(output_path):
     os.mkdir(output_path)
-'''
+
 ### build and simulate model
 
 model = model.Model(p)
