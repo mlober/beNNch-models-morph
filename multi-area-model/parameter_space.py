@@ -38,31 +38,33 @@ p['model_params']['phase'] = 'uniform'
 
 ############# Network parameters ############################################
 
-
-p['num_areas'] = p['num_processes']
-p['areas_list'] = []
-for i in range(p['num_areas']):
-    string = 'area_' + str(i)
-    p['areas_list'].append(string)
-
-p['original'] = {}
-p['original']['withinarea'] = {}
-p['original']['withinarea']['N_total'] = int(80000 * p['scale'])
-p['original']['withinarea']['Nrec'] = int(min(p['original']['withinarea']['N_total'], 10000))         # number of neurons to record spikes from
-p['original']['withinarea']['indegree'] = int(0.05 * p['original']['withinarea']['N_total'])         # total num connections per neuron
-
-p['original']['interareal'] = {}
-if p['num_areas'] > 1:
-    p['original']['interareal']['indegree'] = int(p['original']['withinarea']['indegree'] * 1/(p['num_areas'] - 1))
-
-
-############# Set all parameters to default "original"-Parameters ###########
-
-p['network_params'] = {}
-for area_pre in p['areas_list']:
-    p['network_params'][area_pre] = p['original']['withinarea'].copy()
-    for area_post in p['areas_list']:
-        if area_pre != area_post:
-            p['network_params'][area_pre][area_post] = p['original']['interareal'].copy()
+def calc_dependend_parameters(p):
+    p['num_areas'] = p['num_processes']
+    p['areas_list'] = []
+    for i in range(p['num_areas']):
+        string = 'area_' + str(i)
+        p['areas_list'].append(string)
+    
+    p['original'] = {}
+    p['original']['withinarea'] = {}
+    p['original']['withinarea']['N_total'] = int(80000 * p['scale'])
+    p['original']['withinarea']['Nrec'] = int(min(p['original']['withinarea']['N_total'], 10000))         # number of neurons to record spikes from
+    p['original']['withinarea']['indegree'] = int(0.05 * p['original']['withinarea']['N_total'])         # total num connections per neuron
+    
+    p['original']['interareal'] = {}
+    if p['num_areas'] > 1:
+        p['original']['interareal']['indegree'] = int(p['original']['withinarea']['indegree'] * 1/(p['num_areas'] - 1))
+    
+    
+    ############# Set all parameters to default "original"-Parameters ###########
+    
+    p['network_params'] = {}
+    for area_pre in p['areas_list']:
+        p['network_params'][area_pre] = p['original']['withinarea'].copy()
+        for area_post in p['areas_list']:
+            if area_pre != area_post:
+                p['network_params'][area_pre][area_post] = p['original']['interareal'].copy()
+    
+      return p
 
 
