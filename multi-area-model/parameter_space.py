@@ -64,7 +64,6 @@ def calc_dependend_parameters(p):
         for area_post in p['areas_list']:
             if area_pre != area_post:
                 p['network_params'][area_pre][area_post] = p['original']['interareal'].copy()
-    
-      return p
+    return p
 
 
