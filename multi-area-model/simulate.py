@@ -24,6 +24,17 @@ params = {
 step_data_keys = params['step_data_keys'].split(',')
 params['nvp'] = params['threads_per_task'] * params['num_processes']
 
+# convert strings to booleans
+if params['morph'] == 'True':
+    params['morph'] = True
+else:
+    params['morph'] = False
+
+if params['record_spikes'] == 'True':
+    params['record_spikes'] = True
+else:
+    params['record_spikes'] = False
+
 p.update(params)
 
 p = parameter_space.calc_dependend_parameters(p)
