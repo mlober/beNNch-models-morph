@@ -26,7 +26,7 @@ params['nvp'] = params['threads_per_task'] * params['num_processes']
 
 p.update(params)
 
-p = parameter_space.calc_dependend_params(p)
+p = parameter_space.calc_dependend_parameters(p)
 
 p['data_path'] = os.path.join(p['data_path'], data_folder_hash)
 try:
