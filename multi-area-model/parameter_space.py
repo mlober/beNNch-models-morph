@@ -39,7 +39,7 @@ p['model_params']['phase'] = 'uniform'
 ############# Network parameters ############################################
 
 
-p['num_areas'] = num_mpi
+p['num_areas'] = p['num_processes']
 p['areas_list'] = []
 for i in range(p['num_areas']):
     string = 'area_' + str(i)
