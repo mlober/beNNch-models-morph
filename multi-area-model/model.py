@@ -126,6 +126,28 @@ class Model:
         self.BuildEdgeTime = time.time() - tic
 
 
+    def logging_presim(self):
+        timer_keys = ['time_communicate_target_data',
+                      'time_collocate_spike_data',
+                      'time_communicate_spike_data',
+                      'time_communicate_spike_data_local',
+                      'time_communicate_spike_data_global',
+                      'time_deliver_spike_data',
+                      'time_gather_spike_data',
+                      'time_update',
+                      'time_simulate',
+                      'time_synch_global'
+                      ]
+        values = nest.GetKernelStatus(timer_keys)
+
+        fn = os.path.join(self.data_path,
+                              '_'.join(('logfile',
+                                        str(nest.Rank()))))
+        with open(fn, 'w') as f:
+            for idx, value in enumerate(values):
+                f.write('presim_' + timer_keys[idx] + ' ' + str(value) + '\n')
+            f.write('presim_local_spike_counter' + ' ' + str(nest.GetKernelStatus('local_spike_counter')) + '\n')
+
     def logging(self):
         d = {'py_time_kernel_prepare': self.time_kernel_prepare,
              'py_time_presimulate': self.time_presimulate,
@@ -143,7 +165,7 @@ class Model:
                               '_'.join(('logfile',
                                         str(nest.Rank()))))
 
-        with open(fn, 'w') as f:
+        with open(fn, 'a') as f:
             for key, value in d.items():
                 f.write(key + ' ' + str(value) + '\n')
 
@@ -180,6 +202,7 @@ class Model:
         nest.Run(self.params['presimtime'])
         self.init_memory = self.memory()
         self.time_presimulate = time.time() - t4
+        self.logging_presim()
 
         if self.params['record_spikes']:
             area = self.params['areas_list'][0]
@@ -195,7 +218,7 @@ class Model:
             nest.Connect(nc_sliceable[:self.network_params[area]['Nrec']], self.recorder)
 
         t5 = time.time()
-        nest.Run(self.params['simtime'])
+        nest.Simulate(self.params['simtime'])
         self.time_simulate = time.time() - t5
 
         self.total_memory = self.memory()
