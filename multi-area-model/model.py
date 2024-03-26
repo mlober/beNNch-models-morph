@@ -140,6 +140,8 @@ class Model:
                       ]
         values = nest.GetKernelStatus(timer_keys)
 
+        self.presim_timers = dict(zip(timer_keys, values))
+
         fn = os.path.join(self.data_path,
                               '_'.join(('logfile',
                                         str(nest.Rank()))))
@@ -160,6 +162,10 @@ class Model:
              'init_memory': self.init_memory,
              'total_memory': self.total_memory}
         d.update(nest.GetKernelStatus())
+
+        # subtract presim timers from simtime timers
+        for key in self.presim_timers.keys():
+            d[key] -= self.presim_timers[key]
 
         fn = os.path.join(self.data_path,
                               '_'.join(('logfile',
@@ -218,7 +224,7 @@ class Model:
             nest.Connect(nc_sliceable[:self.network_params[area]['Nrec']], self.recorder)
 
         t5 = time.time()
-        nest.Simulate(self.params['simtime'])
+        nest.Run(self.params['simtime'])
         self.time_simulate = time.time() - t5
 
         self.total_memory = self.memory()
