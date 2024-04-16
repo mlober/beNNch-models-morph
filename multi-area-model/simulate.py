@@ -9,7 +9,7 @@ data_folder_hash = sys.argv[1]
 
 params = {
     'threads_per_task': {threads_per_task},  # total number of threads per process
-    'num_processes': {num_areas}, # equal amount of areas and processes
+    'num_processes': {num_processes}, # equal amount of areas and processes
     'num_areas': {num_areas},  # 
     'simtime': {model_time_sim},  # total simulation time in ms
     'presimtime': {model_time_presim},  # simulation time until reaching equilibrium
