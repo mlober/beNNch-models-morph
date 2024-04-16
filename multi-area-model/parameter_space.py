@@ -12,6 +12,7 @@ p['morph'] = True
 p['threshold_delay'] = 1.0
 
 p['num_processes'] = 32
+p['num_areas'] = 32
 p['threads_per_task'] = 64
 # p['nvp'] = num_mpi * num_local_threads
 
@@ -41,7 +42,6 @@ p['model_params']['phase'] = 'uniform'
 ############# Network parameters ############################################
 
 def calc_dependend_parameters(p):
-    p['num_areas'] = p['num_processes']
     p['areas_list'] = []
     for i in range(p['num_areas']):
         string = 'area_' + str(i)
