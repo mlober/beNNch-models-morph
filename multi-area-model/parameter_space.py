@@ -30,6 +30,8 @@ p['log_file'] = 'logfile'               # naming scheme for the log files
 p['min_delay'] = 0.1
 p['max_delay'] = 2.0
 
+p['area_size'] = 129068 # mean area size of macaque multi-area model
+
 ############# Model parameters ##############################################
 
 p['model_params'] = {}
@@ -47,10 +49,11 @@ def calc_dependend_parameters(p):
     
     p['original'] = {}
     p['original']['withinarea'] = {}
-    p['original']['withinarea']['N_total'] = int(80000 * p['scale'])
+    p['original']['withinarea']['N_total'] = int(p['area_size'] * p['scale'])
     p['original']['withinarea']['Nrec'] = int(min(p['original']['withinarea']['N_total'], 10000))         # number of neurons to record spikes from
-    p['original']['withinarea']['indegree'] = int(0.05 * p['original']['withinarea']['N_total'])         # total num connections per neuron
-    
+    #p['original']['withinarea']['indegree'] = int(0.05 * p['original']['withinarea']['N_total'])         # total num connections per neuron
+    p['original']['withinarea']['indegree'] = 5843 # mean indegree of macaque multi-area model
+  
     p['original']['interareal'] = {}
     if p['num_areas'] > 1:
         p['original']['interareal']['indegree'] = int(p['original']['withinarea']['indegree'] * 1/(p['num_areas'] - 1))
