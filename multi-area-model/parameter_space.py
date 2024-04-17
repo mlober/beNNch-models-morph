@@ -36,7 +36,7 @@ p['area_size'] = 129068 # mean area size of macaque multi-area model
 ############# Model parameters ##############################################
 
 p['model_params'] = {}
-p['model_params']['rate'] = 2.0
+p['model_params']['rate'] = 2.5
 p['model_params']['phase'] = 'uniform'
 
 ############# Network parameters ############################################
