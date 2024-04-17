@@ -134,13 +134,10 @@ class Model:
         timer_keys = ['time_communicate_target_data',
                       'time_collocate_spike_data',
                       'time_communicate_spike_data',
-                      'time_communicate_spike_data_local',
-                      'time_communicate_spike_data_global',
                       'time_deliver_spike_data',
                       'time_gather_spike_data',
                       'time_update',
                       'time_simulate',
-                      'time_synch_global'
                       ]
         values = nest.GetKernelStatus(timer_keys)
 
