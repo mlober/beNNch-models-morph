@@ -106,14 +106,16 @@ class Model:
         nest.message(M_INFO, 'build_network',
                     'Connecting the population internally.')
         
-        delay_mean_intra = (self.params['threshold_delay'] + self.params['min_delay']) / 2
+        #delay_mean_intra = (self.params['threshold_delay'] + self.params['min_delay']) / 2
+        delay_mean_intra = self.params['delay_mean_intra']
         for area in self.params['areas_list']:
             nest.Connect(self.neurons[area], self.neurons[area],
                         {'rule': 'fixed_indegree', 'indegree': self.network_params[area]['indegree']},
                         {'synapse_model': 'static_synapse', 'weight': 0., 
-                         'delay': nest.math.redraw(nest.random.normal(delay_mean_intra, 0.25), min=self.params['dt'], max=self.params['max_delay'])})
+                         'delay': nest.math.redraw(nest.random.normal(delay_mean_intra, 0.5*delay_mean_intra), min=self.params['dt'], max=self.params['max_delay'])})
         
-        delay_mean_inter =  (self.params['max_delay'] + self.params['threshold_delay']) / 2 
+        #delay_mean_inter =  (self.params['max_delay'] + self.params['threshold_delay']) / 2 
+        delay_mean_inter = self.params['delay_mean_inter']
         for area_pre in self.params['areas_list']:
             for area_post in self.params['areas_list']:
                 if area_pre != area_post:
@@ -124,7 +126,7 @@ class Model:
                         conn_dict = {'rule': 'fixed_indegree', 'indegree': self.network_params[area_pre][area_post]['indegree']}
                     nest.Connect(self.neurons[area_pre], self.neurons[area_post], conn_dict,
                                  {'synapse_model': 'static_synapse', 'weight': 0., 
-                                  'delay': nest.math.redraw(nest.random.normal(delay_mean_inter, 0.25), min=self.params['threshold_delay'], max=self.params['max_delay'])}
+                                  'delay': nest.math.redraw(nest.random.normal(delay_mean_inter, 0.5*delay_mean_inter), min=self.params['threshold_delay'], max=self.params['max_delay'])}
                                 )
 
         self.BuildEdgeTime = time.time() - tic

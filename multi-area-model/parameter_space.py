@@ -30,6 +30,8 @@ p['log_file'] = 'logfile'               # naming scheme for the log files
 
 p['min_delay'] = 0.1
 p['max_delay'] = 2.0
+p['delay_mean_intra'] = 0.5
+p['delay_mean_intra'] = 1.5
 
 p['area_size'] = 129068 # mean area size of macaque multi-area model
 

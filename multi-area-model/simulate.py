@@ -28,6 +28,10 @@ p.update(params)
 
 p = parameter_space.calc_dependend_parameters(p)
 
+assert(p['delay_mean_intra'] < p['max_delay'])
+assert(p['delay_mean_inter'] < p['max_delay'])
+assert(0.5 * p['delay_mean_inter'] < p['threshold_delay'])
+
 p['data_path'] = os.path.join(p['data_path'], data_folder_hash)
 try:
     os.mkdir(p['data_path'])
