@@ -17,6 +17,8 @@ params = {
     'rng_seed': {rng_seed},  # random number generator seed
     'min_delay': {min_delay},
     'max_delay': {max_delay},
+    'delay_mean_intra': {delay_mean_intra},
+    'delay_mean_inter': {delay_mean_inter},
     'threshold_delay': {threshold_delay},
     'morph': {morph},
     'step_data_keys': '{step_data_keys}'  # metrics to be recorded at each time step
