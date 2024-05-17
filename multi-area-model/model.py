@@ -133,8 +133,7 @@ class Model:
 
 
     def logging_presim(self):
-        timer_keys = ['time_communicate_target_data',
-                      'time_collocate_spike_data',
+        timer_keys = ['time_collocate_spike_data',
                       'time_communicate_spike_data',
                       'time_communicate_spike_data_local',
                       'time_communicate_spike_data_global',
