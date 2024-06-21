@@ -69,7 +69,8 @@ def calc_dependend_parameters(p):
     for area_pre in p['areas_list']:
         p['network_params'][area_pre] = p['original']['withinarea'].copy()
         p['network_params'][area_pre]['N_total'] = int(np.random.normal(p['network_params'][area_pre]['N_total'], p['unbalanced_network_sigma']*p['network_params'][area_pre]['N_total']))
-        print(f'area {area_pre} has size {p['network_params'][area_pre]['N_total']}')
+        number_neurons = p['network_params'][area_pre]['N_total']
+        print(f'area {area_pre} has size {number_neurons}')
         for area_post in p['areas_list']:
             if area_pre != area_post:
                 p['network_params'][area_pre][area_post] = p['original']['interareal'].copy()
