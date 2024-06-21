@@ -35,6 +35,8 @@ p['delay_mean_inter'] = 1.5
 
 p['area_size'] = 129068 # mean area size of macaque multi-area model
 
+p['unbalanced_network_sigma'] = 0.15
+
 ############# Model parameters ##############################################
 
 p['model_params'] = {}
@@ -54,7 +56,7 @@ def calc_dependend_parameters(p):
     p['original']['withinarea']['N_total'] = int(p['area_size'] * p['scale'])
     p['original']['withinarea']['Nrec'] = int(min(p['original']['withinarea']['N_total'], 10000))         # number of neurons to record spikes from
     #p['original']['withinarea']['indegree'] = int(0.05 * p['original']['withinarea']['N_total'])         # total num connections per neuron
-    p['original']['withinarea']['indegree'] = 5843 # mean indegree of macaque multi-area model
+    p['original']['withinarea']['indegree'] = 2921 # half of mean indegree of macaque multi-area model (half of incoming connections from within area, other half from other areas)
   
     p['original']['interareal'] = {}
     if p['num_areas'] > 1:
@@ -66,6 +68,7 @@ def calc_dependend_parameters(p):
     p['network_params'] = {}
     for area_pre in p['areas_list']:
         p['network_params'][area_pre] = p['original']['withinarea'].copy()
+        p['network_params'][area_pre]['N_total'] = np.random.normal(p['network_params'][area_pre]['N_total'], p['unbalanced_network_sigma']*p['network_params'][area_pre]['N_total'])
         for area_post in p['areas_list']:
             if area_pre != area_post:
                 p['network_params'][area_pre][area_post] = p['original']['interareal'].copy()

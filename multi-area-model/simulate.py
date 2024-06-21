@@ -21,6 +21,7 @@ params = {
     'delay_mean_inter': {delay_mean_inter},
     'threshold_delay': {threshold_delay},
     'morph': {morph},
+    'unbalanced_network_sigma': {unbalanced_network_sigma},
     'step_data_keys': '{step_data_keys}'  # metrics to be recorded at each time step
 }
 step_data_keys = params['step_data_keys'].split(',')
