@@ -68,7 +68,7 @@ def calc_dependend_parameters(p):
     p['network_params'] = {}
     for area_pre in p['areas_list']:
         p['network_params'][area_pre] = p['original']['withinarea'].copy()
-        p['network_params'][area_pre]['N_total'] = np.random.normal(p['network_params'][area_pre]['N_total'], p['unbalanced_network_sigma']*p['network_params'][area_pre]['N_total'])
+        p['network_params'][area_pre]['N_total'] = int(np.random.normal(p['network_params'][area_pre]['N_total'], p['unbalanced_network_sigma']*p['network_params'][area_pre]['N_total']))
         for area_post in p['areas_list']:
             if area_pre != area_post:
                 p['network_params'][area_pre][area_post] = p['original']['interareal'].copy()
