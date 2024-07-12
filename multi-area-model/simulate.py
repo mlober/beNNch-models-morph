@@ -15,6 +15,7 @@ params = {
     'presimtime': {model_time_presim},  # simulation time until reaching equilibrium
     'record_spikes': {record_spikes},  # switch to record spikes of excitatory neurons to file
     'rng_seed': {rng_seed},  # random number generator seed
+    'numpy_seed': {numpy_seed},
     'min_delay': {min_delay},
     'max_delay': {max_delay},
     'delay_mean_intra': {delay_mean_intra},
