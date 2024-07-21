@@ -54,7 +54,7 @@ def calc_dependend_parameters(p):
     p['original']['withinarea']['N_total'] = int(p['area_size'] * p['scale'])
     p['original']['withinarea']['Nrec'] = int(min(p['original']['withinarea']['N_total'], 10000))         # number of neurons to record spikes from
     #p['original']['withinarea']['indegree'] = int(0.05 * p['original']['withinarea']['N_total'])         # total num connections per neuron
-    p['original']['withinarea']['indegree'] = 5843 # mean indegree of macaque multi-area model
+    p['original']['withinarea']['indegree'] = 2921 # mean indegree of macaque multi-area model
   
     p['original']['interareal'] = {}
     if p['num_areas'] > 1:
