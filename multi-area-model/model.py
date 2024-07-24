@@ -181,7 +181,7 @@ class Model:
                 f.write(key + ' ' + str(value) + '\n')
 
         fn_cycle_time = os.path.join(self.data_path,
-                                     '_'.join(('logfile_cycle_time',
+                                     '_'.join(('cycle_time_logfile',
                                                str(nest.Rank()))))
 
         np.savetxt(fn_cycle_time, d['cycle_time_log']['times'])
