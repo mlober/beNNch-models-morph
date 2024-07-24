@@ -180,6 +180,12 @@ class Model:
             for key, value in d.items():
                 f.write(key + ' ' + str(value) + '\n')
 
+        fn_cycle_time = os.path.join(self.data_path,
+                                     '_'.join(('logfile_cycle_time',
+                                               str(nest.Rank()))))
+
+        np.savetxt(fn_cycle_time, d['cycle_time_log']['times'])
+
     def memory(self):
         """
         Use NEST's memory wrapper function to record used memory.
