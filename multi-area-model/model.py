@@ -184,7 +184,7 @@ class Model:
                                      '_'.join(('cycle_time_log',
                                                str(nest.Rank()))))
 
-        np.savetxt(fn_cycle_time, d['cycle_time_log']['times'])
+        np.savetxt(fn_cycle_time, np.transpose([d['cycle_time_log']['times'], d['cycle_time_log']['communicate_time'], d['cycle_time_log']['local_spike_counter']]))
 
     def memory(self):
         """
