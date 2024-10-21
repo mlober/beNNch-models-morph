@@ -38,6 +38,9 @@ p['area_size'] = 129068 # mean area size of macaque multi-area model
 
 p['unbalanced_network_sigma'] = 0.15
 
+p['unbalanced_activity_sigma'] = 0.
+p['unbalanced_activity_mu'] = 14.7 # from MAM metastable
+
 ############# Model parameters ##############################################
 
 p['model_params'] = {}
