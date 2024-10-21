@@ -59,7 +59,7 @@ class Model:
                 self.neurons[area] = self.__create_area(area)
 
         if self.params['unbalanced_activity_sigma'] != 0.:
-            for area in self.params['area_list']:
+            for area in self.params['areas_list']:
                 nest.SetStatus(self.neurons[area], {'rate': nest.math.redraw(
                                                     nest.random.normal(self.params['unbalanced_activity_mu'], 
                                                                        self.params['unbalanced_activity_sigma']), 0.0, np.Inf)})
