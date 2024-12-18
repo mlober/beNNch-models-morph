@@ -4,6 +4,7 @@ from parameter_space import p
 import sys
 import os
 import json
+import time
 
 data_folder_hash = sys.argv[1]
 
@@ -61,5 +62,7 @@ except:
 ### build and simulate model
 
 model = model.Model(p)
+
+time.sleep(600)
 
 model.simulate()
