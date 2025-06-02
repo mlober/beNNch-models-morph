@@ -22,6 +22,7 @@ class Model:
         self.model_params = params['model_params']
         if self.model_params['phase'] == 'uniform':
             self.model_params['phase'] = nest.random.uniform(0, 1)
+            #self.model_params['rate'] = nest.random.uniform(2, 3)
 
         self.num_areas = params['num_areas']
 

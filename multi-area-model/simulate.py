@@ -6,7 +6,7 @@ import os
 import json
 
 data_folder_hash = sys.argv[1]
-
+'''
 params = {
     'threads_per_task': {threads_per_task},  # total number of threads per process
     'num_processes': {num_processes}, # equal amount of areas and processes
@@ -29,7 +29,8 @@ step_data_keys = params['step_data_keys'].split(',')
 params['nvp'] = params['threads_per_task'] * params['num_processes']
 
 p.update(params)
-
+'''
+p['nvp'] = p['threads_per_task'] * p['num_processes']
 p = parameter_space.calc_dependend_parameters(p)
 
 assert(p['delay_mean_intra'] < p['max_delay'])

@@ -8,11 +8,11 @@ p={}
 
 p['data_path'] = './data'
 
-p['morph'] = True
+p['morph'] = False
 p['threshold_delay'] = 1.0
 
-p['num_processes'] = 32
-p['num_areas'] = 32
+p['num_processes'] = 16
+p['num_areas'] = 16
 p['threads_per_task'] = 64
 # p['nvp'] = num_mpi * num_local_threads
 
@@ -30,13 +30,13 @@ p['path_name'] ='.'                     # path where all files will have to be w
 p['log_file'] = 'logfile'               # naming scheme for the log files
 
 p['min_delay'] = 0.1
-p['max_delay'] = 2.0
-p['delay_mean_intra'] = 0.5
-p['delay_mean_inter'] = 1.5
+p['max_delay'] = 12.5
+p['delay_mean_intra'] = 1.25
+p['delay_mean_inter'] = 5.00
 
-p['area_size'] = 129068 # mean area size of macaque multi-area model
+p['area_size'] = int(129068*p['scale']) # mean area size of macaque multi-area model
 
-p['unbalanced_network_sigma'] = 0.15
+p['unbalanced_network_sigma'] = 0.0
 
 ############# Model parameters ##############################################
 
