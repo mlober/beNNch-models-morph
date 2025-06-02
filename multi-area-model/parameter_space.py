@@ -38,6 +38,9 @@ p['area_size'] = int(129068*p['scale']) # mean area size of macaque multi-area m
 
 p['unbalanced_network_sigma'] = 0.0
 
+p['unbalanced_activity_sigma'] = 0.
+p['unbalanced_activity_mu'] = 14.7 # from MAM metastable
+
 ############# Model parameters ##############################################
 
 p['model_params'] = {}
@@ -58,7 +61,7 @@ def calc_dependend_parameters(p):
     p['original']['withinarea']['N_total'] = int(p['area_size'] * p['scale'])
     p['original']['withinarea']['Nrec'] = int(min(p['original']['withinarea']['N_total'], 10000))         # number of neurons to record spikes from
     #p['original']['withinarea']['indegree'] = int(0.05 * p['original']['withinarea']['N_total'])         # total num connections per neuron
-    p['original']['withinarea']['indegree'] = 2921 # half of mean indegree of macaque multi-area model (half of incoming connections from within area, other half from other areas)
+    p['original']['withinarea']['indegree'] = int(2921*p['scale']) # half of mean indegree of macaque multi-area model (half of incoming connections from within area, other half from other areas)
   
     p['original']['interareal'] = {}
     if p['num_areas'] > 1:
