@@ -42,8 +42,8 @@ class Model:
             })
         nest.set_verbosity(M_INFO)
 
-        if self.params['morph']:
-            nest.SetKernelStatus({'threshold_delay': self.params['threshold_delay']})
+        #if self.params['morph']:
+        #    nest.SetKernelStatus({'threshold_delay': self.params['threshold_delay']})
 
     def create(self):
         
@@ -125,11 +125,11 @@ class Model:
         for area_pre in self.params['areas_list']:
             for area_post in self.params['areas_list']:
                 if area_pre != area_post:
-                    if self.params['morph']:
-                        conn_dict = {'rule': 'fixed_indegree', 'indegree': self.network_params[area_pre][area_post]['indegree'],
-                                     'long_range': self.params['morph']}
-                    else:
-                        conn_dict = {'rule': 'fixed_indegree', 'indegree': self.network_params[area_pre][area_post]['indegree']}
+                    #if self.params['morph']:
+                    #    conn_dict = {'rule': 'fixed_indegree', 'indegree': self.network_params[area_pre][area_post]['indegree'],
+                    #                 'long_range': self.params['morph']}
+                    #else:
+                    conn_dict = {'rule': 'fixed_indegree', 'indegree': self.network_params[area_pre][area_post]['indegree']}
                     nest.Connect(self.neurons[area_pre], self.neurons[area_post], conn_dict,
                                  {'synapse_model': 'static_synapse', 'weight': 0., 
                                   'delay': nest.math.redraw(nest.random.normal(delay_mean_inter, 0.5*delay_mean_inter), min=self.params['threshold_delay'], max=self.params['max_delay'])}
