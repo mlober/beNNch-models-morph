@@ -8,11 +8,11 @@ p={}
 
 p['data_path'] = './data'
 
-p['morph'] = True
+p['morph'] = False
 p['threshold_delay'] = 1.0
 
-p['num_processes'] = 32
-p['num_areas'] = 32
+p['num_processes'] = 16
+p['num_areas'] = 16
 p['threads_per_task'] = 64
 # p['nvp'] = num_mpi * num_local_threads
 
@@ -43,9 +43,11 @@ p['unbalanced_activity_mu'] = 14.7 # from MAM metastable
 
 ############# Model parameters ##############################################
 
+p['neuron_model'] = 'iaf_psc_exp'
 p['model_params'] = {}
-p['model_params']['rate'] = 2.5
-p['model_params']['phase'] = 'uniform'
+#p['model_params']['rate'] = 2.5
+#p['model_params']['phase'] = 'uniform'
+p['model_params']['I_e'] = 375.00000000000285
 
 ############# Network parameters ############################################
 

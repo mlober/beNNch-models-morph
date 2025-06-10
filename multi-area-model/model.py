@@ -70,7 +70,7 @@ class Model:
         self.BuildNodeTime = time.time() - tic
 
     def __create_area(self, area):
-        neurons = nest.Create('ignore_and_fire', self.network_params[area]['N_total'], params=self.model_params)
+        neurons = nest.Create(self.params['neuron_model'], self.network_params[area]['N_total'], params=self.model_params)
         return neurons
 
     def __create_neurons(self):
@@ -78,7 +78,7 @@ class Model:
         max_num_neurons_per_area = int(max(total_num_neurons_per_area))
 
         total_num_neurons = max_num_neurons_per_area * self.num_areas
-        self.all_neurons = nest.Create('ignore_and_fire', total_num_neurons, params=self.model_params)
+        self.all_neurons = nest.Create(self.params['neuron_model'], total_num_neurons, params=self.model_params)
         nest.SetStatus(self.all_neurons, {'frozen': True})
 
     def __define_area(self, area, area_idx):
