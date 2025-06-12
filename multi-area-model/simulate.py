@@ -31,7 +31,8 @@ params = {
 step_data_keys = params['step_data_keys'].split(',')
 params['nvp'] = params['threads_per_task'] * params['num_processes']
 '''
-params['nvp'] = 64*16
+params = {}
+params['nvp'] = int(64*16)
 p.update(params)
 
 p = parameter_space.calc_dependend_parameters(p)

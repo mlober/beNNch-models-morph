@@ -34,9 +34,9 @@ p['max_delay'] = 2.0
 p['delay_mean_intra'] = 0.5
 p['delay_mean_inter'] = 1.5
 
-p['area_size'] = 129068 # mean area size of macaque multi-area model
+p['area_size'] = int(129068*p['scale']) # mean area size of macaque multi-area model
 
-p['unbalanced_network_sigma'] = 0.15
+p['unbalanced_network_sigma'] = 0.0
 
 p['unbalanced_activity_sigma'] = 0.
 p['unbalanced_activity_mu'] = 14.7 # from MAM metastable

@@ -20,8 +20,8 @@ class Model:
         
         self.network_params = params['network_params']
         self.model_params = params['model_params']
-        if self.model_params['phase'] == 'uniform':
-            self.model_params['phase'] = nest.random.uniform(0, 1)
+        #if self.model_params['phase'] == 'uniform':
+        #    self.model_params['phase'] = nest.random.uniform(0, 1)
 
         self.num_areas = params['num_areas']
 
@@ -63,6 +63,12 @@ class Model:
                 nest.SetStatus(self.neurons[area], {'rate': nest.math.redraw(
                                                     nest.random.normal(self.params['unbalanced_activity_mu'], 
                                                                        self.params['unbalanced_activity_sigma']), 0.0, np.Inf)})
+        if self.params['neuron_model'] == 'iaf_psc_exp':
+            for area in self.params['areas_list']:
+                nest.SetStatus(self.neurons[area], {'V_m': nest.random.uniform(-80, -70),
+                                                    'tau_m': nest.random.uniform(11, 15.35),
+                                                    'V_th': nest.random.uniform(-50, -45),
+                                                    'V_reset': nest.random.uniform(-80, -70)})
         
         if self.params['record_spikes'] == True:
             self.__create_spike_recorder()
