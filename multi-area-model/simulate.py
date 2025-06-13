@@ -25,7 +25,7 @@ params = {
     'unbalanced_network_sigma': {unbalanced_network_sigma},
     'unbalanced_activity_sigma': {unbalanced_activity_sigma},
     'unbalanced_activity_mu': {unbalanced_activity_mu},
-    'neuron_model': {neuron_model},
+    'neuron_model': '{neuron_model}',
     'step_data_keys': '{step_data_keys}'  # metrics to be recorded at each time step
 }
 step_data_keys = params['step_data_keys'].split(',')
