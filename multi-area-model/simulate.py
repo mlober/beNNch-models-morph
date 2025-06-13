@@ -7,7 +7,6 @@ import json
 
 data_folder_hash = sys.argv[1]
 
-'''
 params = {
     'threads_per_task': {threads_per_task},  # total number of threads per process
     'num_processes': {num_processes}, # equal amount of areas and processes
@@ -26,15 +25,13 @@ params = {
     'unbalanced_network_sigma': {unbalanced_network_sigma},
     'unbalanced_activity_sigma': {unbalanced_activity_sigma},
     'unbalanced_activity_mu': {unbalanced_activity_mu},
+    'neuron_model': {neuron_model},
     'step_data_keys': '{step_data_keys}'  # metrics to be recorded at each time step
 }
 step_data_keys = params['step_data_keys'].split(',')
 params['nvp'] = params['threads_per_task'] * params['num_processes']
-'''
-params = {}
-params['nvp'] = int(64*16)
-p.update(params)
 
+p.update(params)
 p = parameter_space.calc_dependend_parameters(p)
 
 assert(p['delay_mean_intra'] < p['max_delay'])
