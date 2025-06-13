@@ -17,11 +17,10 @@ class Model:
 
         self.params = params
 
-        
         self.network_params = params['network_params']
-        self.model_params = params['model_params']
-
-        if self.params['neuron_model']=='ignore_and_fire' and self.model_params['phase'] == 'uniform':
+        self.model_params = params[params['neuron_model']]['model_params']
+        
+        if self.params['neuron_model'] == 'ignore_and_fire' and self.model_params['phase'] == 'uniform':
             self.model_params['phase'] = nest.random.uniform(0, 1)
             #self.model_params['rate'] = nest.random.uniform(2, 3)
 
@@ -67,7 +66,8 @@ class Model:
                                                                        self.params['unbalanced_activity_sigma']), 0.0, np.Inf)})
         if self.params['neuron_model'] == 'iaf_psc_exp':
             for area in self.params['areas_list']:
-                nest.SetStatus(self.neurons[area], {'V_m': nest.random.uniform(-80, -70),
+                nest.SetStatus(self.neurons[area], {'I_e': 375.00000000000285,
+                                                    'V_m': nest.random.uniform(-80, -70),
                                                     'tau_m': nest.random.uniform(11, 15.35),
                                                     'V_th': nest.random.uniform(-50, -45),
                                                     'V_reset': nest.random.uniform(-80, -70)})
