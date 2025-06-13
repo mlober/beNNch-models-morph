@@ -43,9 +43,11 @@ p['unbalanced_activity_mu'] = 14.7 # from MAM metastable
 
 ############# Model parameters ##############################################
 
+p['neuron_model'] = 'iaf_psc_exp'
 p['model_params'] = {}
-p['model_params']['rate'] = 2.5
-p['model_params']['phase'] = 'uniform'
+#p['model_params']['rate'] = 2.5
+#p['model_params']['phase'] = 'uniform'
+p['model_params']['I_e'] = 375.00000000000285
 
 ############# Network parameters ############################################
 

@@ -20,7 +20,8 @@ class Model:
         
         self.network_params = params['network_params']
         self.model_params = params['model_params']
-        if self.model_params['phase'] == 'uniform':
+
+        if self.params['neuron_model']=='ignore_and_fire' and self.model_params['phase'] == 'uniform':
             self.model_params['phase'] = nest.random.uniform(0, 1)
             #self.model_params['rate'] = nest.random.uniform(2, 3)
 
@@ -64,6 +65,12 @@ class Model:
                 nest.SetStatus(self.neurons[area], {'rate': nest.math.redraw(
                                                     nest.random.normal(self.params['unbalanced_activity_mu'], 
                                                                        self.params['unbalanced_activity_sigma']), 0.0, np.Inf)})
+        if self.params['neuron_model'] == 'iaf_psc_exp':
+            for area in self.params['areas_list']:
+                nest.SetStatus(self.neurons[area], {'V_m': nest.random.uniform(-80, -70),
+                                                    'tau_m': nest.random.uniform(11, 15.35),
+                                                    'V_th': nest.random.uniform(-50, -45),
+                                                    'V_reset': nest.random.uniform(-80, -70)})
         
         if self.params['record_spikes'] == True:
             self.__create_spike_recorder()
@@ -71,7 +78,7 @@ class Model:
         self.BuildNodeTime = time.time() - tic
 
     def __create_area(self, area):
-        neurons = nest.Create('ignore_and_fire', self.network_params[area]['N_total'], params=self.model_params)
+        neurons = nest.Create(self.params['neuron_model'], self.network_params[area]['N_total'], params=self.model_params)
         return neurons
 
     def __create_neurons(self):
@@ -79,7 +86,7 @@ class Model:
         max_num_neurons_per_area = int(max(total_num_neurons_per_area))
 
         total_num_neurons = max_num_neurons_per_area * self.num_areas
-        self.all_neurons = nest.Create('ignore_and_fire', total_num_neurons, params=self.model_params)
+        self.all_neurons = nest.Create(self.params['neuron_model'], total_num_neurons, params=self.model_params)
         nest.SetStatus(self.all_neurons, {'frozen': True})
 
     def __define_area(self, area, area_idx):
