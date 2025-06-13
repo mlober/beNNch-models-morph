@@ -8,7 +8,7 @@ p={}
 
 p['data_path'] = './data'
 
-p['morph'] = False
+p['morph'] = True
 p['threshold_delay'] = 1.0
 
 p['num_processes'] = 16
@@ -30,9 +30,9 @@ p['path_name'] ='.'                     # path where all files will have to be w
 p['log_file'] = 'logfile'               # naming scheme for the log files
 
 p['min_delay'] = 0.1
-p['max_delay'] = 2.0
-p['delay_mean_intra'] = 0.5
-p['delay_mean_inter'] = 1.5
+p['max_delay'] = 12.5
+p['delay_mean_intra'] = 1.25
+p['delay_mean_inter'] = 5.00
 
 p['area_size'] = int(129068*p['scale']) # mean area size of macaque multi-area model
 
