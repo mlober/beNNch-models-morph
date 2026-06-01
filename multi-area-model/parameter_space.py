@@ -11,9 +11,9 @@ p['data_path'] = './data'
 p['morph'] = True
 p['threshold_delay'] = 1.0
 
-p['num_processes'] = 16
-p['num_areas'] = 16
-p['threads_per_task'] = 64
+p['num_processes'] = 64
+p['num_areas'] = 64
+p['threads_per_task'] = 48
 # p['nvp'] = num_mpi * num_local_threads
 
 p['scale'] = 1.0                        # scaling factor of the network size
@@ -30,7 +30,7 @@ p['path_name'] ='.'                     # path where all files will have to be w
 p['log_file'] = 'logfile'               # naming scheme for the log files
 
 p['min_delay'] = 0.1
-p['max_delay'] = 12.5
+p['max_delay'] = 60. #12.5
 p['delay_mean_intra'] = 1.25
 p['delay_mean_inter'] = 5.00
 
@@ -38,12 +38,12 @@ p['area_size'] = int(129068*p['scale']) # mean area size of macaque multi-area m
 
 p['unbalanced_network_sigma'] = 0.0
 
-p['unbalanced_activity_sigma'] = 0.
-p['unbalanced_activity_mu'] = 14.7 # from MAM metastable
+p['unbalanced_activity_sigma'] = 0.0 # CV=0.58 for MAM ground state
+p['unbalanced_activity_mu'] = 2.5 # from MAM ground state;  #[14.7 from MAM metastable]
 
 ############# Model parameters ##############################################
 
-p['neuron_model'] = 'iaf_psc_exp'
+p['neuron_model'] = 'ignore_and_fire'
 p['ignore_and_fire'] = {}
 p['ignore_and_fire']['model_params'] = {}
 p['ignore_and_fire']['model_params']['rate'] = 2.5

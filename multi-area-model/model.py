@@ -2,8 +2,10 @@ import os
 import sys
 import time
 import nest
+import psutil
 
 import numpy as np
+import scipy.stats as stats
 
 
 M_INFO = 10
@@ -58,10 +60,15 @@ class Model:
                 self.neurons[area] = self.__create_area(area)
 
         if self.params['unbalanced_activity_sigma'] != 0.:
+            np.random.seed(seed=self.params['numpy_seed'])
+            mu, sigma = self.params['unbalanced_activity_mu'], self.params['unbalanced_activity_sigma']
+            lower, upper = mu-2*sigma, mu+2*sigma
+            lower = max(0.01, lower)
+            rates_generator = stats.truncnorm((lower - mu) / sigma, (upper - mu) / sigma, loc=mu, scale=sigma)
             for area in self.params['areas_list']:
-                nest.SetStatus(self.neurons[area], {'rate': nest.math.redraw(
-                                                    nest.random.normal(self.params['unbalanced_activity_mu'], 
-                                                                       self.params['unbalanced_activity_sigma']), 0.0, np.Inf)})
+                rate = rates_generator.rvs(1)[0]
+                print('---------------- rate:', rate)
+                nest.SetStatus(self.neurons[area], {'rate': rate})
         if self.params['neuron_model'] == 'iaf_psc_exp':
             for area in self.params['areas_list']:
                 nest.SetStatus(self.neurons[area], {'I_e': 375.00000000000285,
@@ -69,7 +76,7 @@ class Model:
                                                     'tau_m': nest.random.uniform(11, 15.35),
                                                     'V_th': nest.random.uniform(-50, -45),
                                                     'V_reset': nest.random.uniform(-80, -70)})
-        
+                
         if self.params['record_spikes'] == True:
             self.__create_spike_recorder()
 
@@ -123,7 +130,7 @@ class Model:
         for area in self.params['areas_list']:
             nest.Connect(self.neurons[area], self.neurons[area],
                         {'rule': 'fixed_indegree', 'indegree': self.network_params[area]['indegree']},
-                        {'synapse_model': 'static_synapse', 'weight': 0., 
+                        {'synapse_model': 'static_synapse_hpc', 'weight': 0., 
                          'delay': nest.math.redraw(nest.random.normal(delay_mean_intra, 0.5*delay_mean_intra), min=self.params['dt'], max=self.params['max_delay'])})
         
         #delay_mean_inter =  (self.params['max_delay'] + self.params['threshold_delay']) / 2 
@@ -132,12 +139,12 @@ class Model:
             for area_post in self.params['areas_list']:
                 if area_pre != area_post:
                     if self.params['morph']:
-                        conn_dict = {'rule': 'fixed_indegree', 'indegree': self.network_params[area_pre][area_post]['indegree'],
-                                     'long_range': self.params['morph']}
+                        conn_dict = {'rule': 'fixed_indegree', 'indegree': self.network_params[area_pre][area_post]['indegree']
+                                     , 'long_range': self.params['morph']}
                     else:
                         conn_dict = {'rule': 'fixed_indegree', 'indegree': self.network_params[area_pre][area_post]['indegree']}
                     nest.Connect(self.neurons[area_pre], self.neurons[area_post], conn_dict,
-                                 {'synapse_model': 'static_synapse', 'weight': 0., 
+                                 {'synapse_model': 'static_synapse_hpc', 'weight': 0., 
                                   'delay': nest.math.redraw(nest.random.normal(delay_mean_inter, 0.5*delay_mean_inter), min=self.params['threshold_delay'], max=self.params['max_delay'])}
                                 )
 
@@ -175,7 +182,9 @@ class Model:
              'py_time_create': self.time_create,
              'py_time_connect': self.time_connect,
              'base_memory': self.base_memory,
+             'creation_memory': self.creation_memory,
              'network_memory': self.network_memory,
+             'preparation_memory': self.preparation_memory,
              'init_memory': self.init_memory,
              'total_memory': self.total_memory}
         d.update(nest.GetKernelStatus())
@@ -218,6 +227,7 @@ class Model:
         self.time_kernel_prepare = t1 - t0
 
         self.create()
+        self.creation_memory = self.memory()
         self.time_create = time.time() - t1
         
         t2 = time.time()
@@ -227,6 +237,7 @@ class Model:
 
         t3 = time.time()
         nest.Prepare()
+        self.preparation_memory = self.memory()
         self.time_network_prepare = time.time() - t3
 
         t4 = time.time()
@@ -255,3 +266,7 @@ class Model:
         self.total_memory = self.memory()
         self.logging()
 
+        mem = psutil.virtual_memory()
+        print('psutil memory: ', mem)
+        total = mem.total >> 30
+        print('total memory in GB: ', total)
